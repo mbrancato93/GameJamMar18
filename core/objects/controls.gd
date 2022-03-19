@@ -13,3 +13,9 @@ func get_input( force: float ) -> Array:
 	arr.append( Input.get_action_strength( g.right ) * force )
 	arr.append( Input.get_action_strength( g.down ) * force )
 	return arr
+
+func transition_request() -> bool:
+	var val = Input.get_action_strength( g.transition )
+	if( is_equal_approx( val, 0 ) ):
+		return false
+	return true
