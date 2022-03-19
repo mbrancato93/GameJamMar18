@@ -1,0 +1,27 @@
+-> Animation ( 32x32 )
+	-> Water **
+		-> Static
+		-> Motion Left 
+		-> Motion Right
+		-> Motion Jump
+	-> Steam
+		-> Static
+		-> Motion Left 
+		-> Motion Right
+		-> Motion Jump
+	-> Ice
+
+-> TileSets *** ( 32x32 )
+	-> 160x32 tile
+
+-> Scrolling background
+
+-> Death screen
+-> Intro screen
+	-> Main menu
+
+
+-> Player Physics
+	-> All 3 phases
+-> Map Design
+	-> 
