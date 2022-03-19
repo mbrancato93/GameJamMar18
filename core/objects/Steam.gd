@@ -1,5 +1,5 @@
 extends KinematicBody2D
-class_name Water
+class_name Steam
 
 var g = load( "res://objects/GLOBALS.gd" ).new()
 
@@ -8,7 +8,7 @@ func _ready():
 	pass # Replace with function body.
 
 
-func calc_motion( mass: float, damping: float, velocity: Vector2, forces: Vector2, on_floor: bool ):
+func calc_motion( mass: float, damping: float, velocity: Vector2, forces: Vector2, on_floor: bool, facing: float ):
 	var anim_name = "none"
 	
 	if( !on_floor ):
@@ -19,13 +19,18 @@ func calc_motion( mass: float, damping: float, velocity: Vector2, forces: Vector
 	var acceleration := forces / mass
 #	if( is_on_floor() ):
 	acceleration[0] -= damping * velocity[0]
-	acceleration[1] += ( g.GRAVITY / mass - sign( velocity[1] ) * damping )
+	acceleration[1] += ( 0.5 * g.GRAVITY / mass - sign( velocity[1] ) * damping )
 	
 	if( forces[1] < 0 || velocity[1] < 0  ):
-		anim_name = "water_jump"
+		anim_name = "steam_jump"
 	elif( forces[0] != 0 ):
-		anim_name = "water_move"
+		anim_name = "steam_move"
 	else:
-		anim_name = "water_idle"
+		anim_name = "steam_idle"
 		
-	return { "accel": acceleration, "anim": anim_name }
+	if( forces[0] > 0 ):
+		facing = 1
+	elif( forces[0] < 0 ):
+		facing = -1
+		
+	return { "accel": acceleration, "anim": anim_name, "facing": facing }

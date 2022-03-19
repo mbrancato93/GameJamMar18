@@ -19,3 +19,10 @@ func transition_request() -> bool:
 	if( is_equal_approx( val, 0 ) ):
 		return false
 	return true
+	
+func shoot_request() -> bool:
+	var val = Input.get_action_strength(( g.shoot ) )
+	if( is_equal_approx( val, 0 ) ):
+		return false
+	return true
+

@@ -15,14 +15,24 @@ _global_script_classes=[ {
 "path": "res://objects/BasicBody.gd"
 }, {
 "base": "KinematicBody2D",
+"class": "Ice",
+"language": "GDScript",
+"path": "res://Ice.gd"
+}, {
+"base": "Area2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://objects/Projectile.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Steam",
 "language": "GDScript",
-"path": "res://Steam.gd"
+"path": "res://objects/Steam.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Water",
 "language": "GDScript",
-"path": "res://Water.gd"
+"path": "res://objects/Water.gd"
 }, {
 "base": "Node2D",
 "class": "debug",
@@ -31,6 +41,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "BasicBody": "",
+"Ice": "",
+"Projectile": "",
 "Steam": "",
 "Water": "",
 "debug": ""
