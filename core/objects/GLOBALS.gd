@@ -8,6 +8,8 @@ var down := "down" setget private
 var shoot := "shoot" setget private
 var transition := "cycle_state" setget private
 
+var upVec := Vector2( 0, -1 )
+
 func private( _val = null ):
 	print( "Attempted to overwrite global" )
 	assert( 1 == 0 )

@@ -17,8 +17,12 @@ func calc_motion( mass: float, damping: float, velocity: Vector2, forces: Vector
 		forces[1] = min( 0, 30*forces[1] )
 	
 	var acceleration := forces / mass
-#	if( is_on_floor() ):
-	acceleration[0] -= damping * velocity[0]
+
+	if( on_floor ):
+		acceleration[0] -= damping * velocity[0]
+	else:
+		acceleration[0] = -damping * sign( velocity[0] )		
+		
 	acceleration[1] += ( g.GRAVITY / mass - sign( velocity[1] ) * damping )
 	
 	if( forces[1] < 0 || velocity[1] < 0  ):

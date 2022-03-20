@@ -549,6 +549,7 @@ script = ExtResource( 2 )
 position = Vector2( 0, -16 )
 texture = ExtResource( 1 )
 vframes = 10
+region_rect = Rect2( 0, 0, 50, 200 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -10 )
@@ -568,7 +569,7 @@ anims/water_jump = SubResource( 6 )
 anims/water_move = SubResource( 4 )
 
 [node name="MuzzleRight" type="Position2D" parent="."]
-position = Vector2( 16, -10 )
+position = Vector2( 11, -10 )
 
 [node name="MuzzleLeft" type="Position2D" parent="."]
-position = Vector2( -16, -10 )
+position = Vector2( -11, -10 )

@@ -22,9 +22,11 @@ func calc_motion( mass: float, damping: float, velocity: Vector2, forces: Vector
 	acceleration[1] += ( 0.5 * g.GRAVITY / mass - sign( velocity[1] ) * damping )
 	
 	if( forces[1] < 0 || velocity[1] < 0  ):
-		anim_name = "steam_jump"
+#		anim_name = "steam_jump"
+		anim_name = "steam_idle"
 	elif( forces[0] != 0 ):
-		anim_name = "steam_move"
+#		anim_name = "steam_move"
+		anim_name = "steam_idle"
 	else:
 		anim_name = "steam_idle"
 		

@@ -20,8 +20,10 @@ func _ready():
 #func _process(delta):
 #	pass
 func _physics_process(delta):
-	var player_pos := Vector2()
-	player_pos = get_parent().get_node( "Player" ).global_position
+	var player_pos := Vector2( 0, 0 )
+	var mp = get_parent().get_node( "Player" )
+	if( is_instance_valid( mp ) ):
+		player_pos = get_parent().get_node( "Player" ).global_position
 #	debug.DEBUG( "Player pos: %f %f" % [ player_pos[0], player_pos[1] ] )
 #	debug.DEBUG( "Camera Pos: %f %f" % [ self.global_position[0], self.global_position[1] ] )
 	

@@ -12,11 +12,13 @@ var transitioning := false
 onready var shot_debounce := OS.get_ticks_msec()
 var facing := 1
 
+onready var hit_debounce = OS.get_ticks_msec()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	debug.verbosity = 2
 	debug.period = 1000
-	damping = 5
+	damping = 3
 	pass # Replace with function body.
 
 func shoot( facing: float ):
@@ -34,6 +36,8 @@ func shoot( facing: float ):
 	shot_debounce = OS.get_ticks_msec()
 	
 func setState( _val ):
+	if( transitioning ):
+		return
 	print_debug( "State change request" )
 	
 	transitioning = true
@@ -51,15 +55,34 @@ func setState( _val ):
 		state_transition_anim = "STEAM2WATER"
 	elif( state == STEAM && _val == ICE ):
 		assert( 1 == 0 )
+	elif( state == _val ):
+		pass
 	else:
 		assert( 1 == 0 )
 		
-	$AnimationPlayer.play( state_transition_anim )
+	if( state_transition_anim != "none" ):
+		$AnimationPlayer.play( state_transition_anim )
+	else:
+		transitioning = false
+		$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
 	state = _val
 
 func transition_end( _val = null ):
 	transitioning = false
+	$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
 	
+func hit( source ):
+	if( ( OS.get_ticks_msec() - hit_debounce ) < 1000 ):
+		return
+#	debug.DEBUG( "Hit by Enemy" )
+	hit_debounce = OS.get_ticks_msec()
+	if( state == STEAM ):
+		setState( WATER )
+		get_parent().reset()
+		return
+	if( state != ICE ):
+		setState( STEAM )
+
 func _physics_process(delta):
 	
 	var arr = controls.get_input( force )
@@ -97,13 +120,6 @@ func _physics_process(delta):
 		setState ( WATER )
 		return
 	
-#	if( curr_forces[0] > 0 ):
-#		facing = 1
-#		$Sprite.scale.x = 1
-#	elif( curr_forces[0] < 0 ):
-#		facing = -1
-#		$Sprite.scale.x = -1
-
 	var acceleration := Vector2()
 	var anim_name := "none"
 	var sprite_scale := 1
@@ -122,12 +138,20 @@ func _physics_process(delta):
 		sprite_scale = ret.facing
 	elif( state == ICE ):
 		var p = Ice.new()
-		var ret = p.calc_motion( mass, 0.0*damping, velocity, curr_forces, is_on_floor(), facing )
+		var ret = p.calc_motion( mass, 0.1*damping, velocity, curr_forces, is_on_floor(), facing )
 		acceleration = ret.accel
 		anim_name = ret.anim
 		sprite_scale = ret.facing
 	else:
 		assert( 1== 0 )
+		
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if( collision.collider.name == "Enemy" ):
+			if( collision.collider.facing == facing ):
+				hit( "Player" )
+				break
+			pass
 	
 	velocity += acceleration * delta
 	$Sprite.scale.x = sprite_scale
@@ -138,3 +162,6 @@ func _physics_process(delta):
 #	debug.DEBUG( "Anim: %s" % anim_name )
 
 	velocity = move_and_slide( velocity, UP )
+	
+	if( self.position[1] > 1000 ):
+		get_parent().reset()
