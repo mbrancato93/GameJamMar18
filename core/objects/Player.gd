@@ -147,13 +147,13 @@ func _physics_process(delta):
 	else:
 		assert( 1== 0 )
 		
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		if( collision.collider.name == "Enemy" ):
-			if( collision.collider.facing == facing ):
-#				hit( "Player" )
-				break
-			pass
+#	for i in get_slide_count():
+#		var collision = get_slide_collision(i)
+#		if( collision.collider.name == "Enemy" ):
+#			if( collision.collider.facing == facing ):
+##				hit( "Player" )
+#				break
+#			pass
 	
 	velocity += acceleration * delta
 	$Sprite.scale.x = sprite_scale

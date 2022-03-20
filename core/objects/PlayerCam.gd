@@ -2,9 +2,8 @@ extends Camera2D
 
 var debug = load( "res://objects/debug.gd" ).new()
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var height_track := 392
+var hor_track := 256
 
 
 # Called when the node enters the scene tree for the first time.
@@ -24,13 +23,14 @@ func _physics_process(delta):
 	var mp = get_parent().get_node( "Player" )
 	if( is_instance_valid( mp ) ):
 		player_pos = get_parent().get_node( "Player" ).global_position
-#	debug.DEBUG( "Player pos: %f %f" % [ player_pos[0], player_pos[1] ] )
+	debug.DEBUG( "Player pos: %f %f" % [ player_pos[0], player_pos[1] ] )
 #	debug.DEBUG( "Camera Pos: %f %f" % [ self.global_position[0], self.global_position[1] ] )
-	
-	var vps = get_viewport().size
-	debug.DEBUG( "Viewport Size: %f %f" % [ vps[0], vps[1] ] )
-	
+
 	# handle smoothing action of camera,
-	self.position[0] = player_pos[0]
+	if( player_pos[0] > hor_track ):
+		self.position[0] = player_pos[0]
+	
+	if( player_pos[1] < height_track ):
+		self.position[1] = player_pos[1]
 	pass
 	

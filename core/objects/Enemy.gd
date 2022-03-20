@@ -1,6 +1,6 @@
 extends BasicBody
 
-enum {FIRE,ASH}
+enum {FIRE,ASH,DEAD}
 var state := FIRE setget setState
 var transitioning := false
 var facing := -1
@@ -14,6 +14,8 @@ func setState( _val ):
 		state_transition_anim = "FIRE2ASH"
 	elif( state == ASH && _val == FIRE ):
 		state_transition_anim = "ASH2FIRE"
+	elif( state == ASH && _val == DEAD ):
+		state_transition_anim = "ASH2DEAD"
 	elif( state == ASH && _val == ASH ):
 		state_transition_anim = "none"
 	elif( state == FIRE && _val == FIRE ):
@@ -27,6 +29,9 @@ func setState( _val ):
 		transitioning = false
 #		$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
 	state = _val
+	if( state == DEAD ):
+		$CollisionShape2D.disabled = true
+		$Area2D.get_node("CollisionShape2D").disabled = true
 
 func transition_end( _val = null ):
 	transitioning = false
@@ -65,15 +70,21 @@ func _physics_process(delta):
 	
 	velocity = move_and_slide( velocity, g.upVec )
 	
+func dead_transition( _val = null ):
+	queue_free()
+	
 func hit( _val ):
 	if( state == ASH ):
-		queue_free()
+#		queue_free()
+		$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
+		$AnimationPlayer.connect( "animation_finished", self, "dead_transition" )
+		setState( DEAD )
 		return
 	setState( ASH )
 
 
 func _on_Area2D_body_entered(body):
-	if( body.name == "Player" ):
+	if( body.name == "Player" && state != DEAD ):
 		body.hit( "Enemy" )
 		facing *= -1
 		pass
