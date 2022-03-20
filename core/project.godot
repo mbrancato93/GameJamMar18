@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Ice",
 "language": "GDScript",
-"path": "res://Ice.gd"
+"path": "res://objects/Ice.gd"
 }, {
 "base": "Area2D",
 "class": "Projectile",
@@ -51,7 +51,7 @@ _global_script_class_icons={
 [application]
 
 config/name="core"
-run/main_scene="res://scenes/World.tscn"
+run/main_scene="res://scenes/Intro.tscn"
 config/icon="res://icon.png"
 
 [input]
