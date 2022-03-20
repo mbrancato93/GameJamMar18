@@ -1,12 +1,53 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Enemies/Fire_Sprite.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/Ash_SpriteSheet.png" type="Texture" id=2]
 [ext_resource path="res://Enemies/Fire_To_Ash_SpriteSheet.png" type="Texture" id=3]
 [ext_resource path="res://objects/Enemy.gd" type="Script" id=4]
+[ext_resource path="res://Enemies/Ash_Death_SpriteSheet.png" type="Texture" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
+
+[sub_resource type="Animation" id=7]
+resource_name = "ASH2DEAD"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 8 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7, 7 ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "ASH2FIRE"
@@ -234,6 +275,7 @@ shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = -5.0
+anims/ASH2DEAD = SubResource( 7 )
 anims/ASH2FIRE = SubResource( 5 )
 anims/FIRE2ASH = SubResource( 5 )
 anims/RESET = SubResource( 2 )

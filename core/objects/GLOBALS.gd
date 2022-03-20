@@ -1,12 +1,13 @@
 extends Node
 
-var GRAVITY := 150 setget private
+var GRAVITY := 100 setget private
 var up := "up" setget private
 var left := "left" setget private
 var right := "right" setget private
 var down := "down" setget private
 var shoot := "shoot" setget private
 var transition := "cycle_state" setget private
+var toggle_music := "toggle_music" setget private
 
 var upVec := Vector2( 0, -1 )
 
