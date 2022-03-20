@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Character_Shoot_Short.wav-2a40639ccd8ddc63be461d726ffcee12.sample"
+
+[deps]
+
+source_file="res://SFX/Character_Shoot_Short.wav"
+dest_files=[ "res://.import/Character_Shoot_Short.wav-2a40639ccd8ddc63be461d726ffcee12.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

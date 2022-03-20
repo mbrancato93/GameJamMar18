@@ -1,6 +1,6 @@
 extends Node
 
-var GRAVITY := 100
+var GRAVITY := 70
 var up := "up" setget private
 var left := "left" setget private
 var right := "right" setget private
