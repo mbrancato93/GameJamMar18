@@ -85,8 +85,21 @@ func hit( source ):
 	if( state != ICE ):
 		setState( STEAM )
 
+func _input( event ):
+	if( event.is_action_pressed( "grav_up" ) ):
+		g.GRAVITY += 10
+	if( event.is_action_pressed( "grav_down" ) ):
+		if( g.GRAVITY >= 20 ):
+			 g.GRAVITY -= 10
+	if( event.is_action_pressed( "damp_up" ) ):
+		damping += 0.1
+	if( event.is_action_pressed( "damp_down" ) ):
+		if( damping >= 0.1 ):
+			damping -= 0.1
+		
+
+
 func _physics_process(delta):
-	
 	var arr = controls.get_input( force )
 	curr_forces = Vector2( 
 		( arr[2] - arr[0] ),
@@ -126,21 +139,23 @@ func _physics_process(delta):
 	var anim_name := "none"
 	var sprite_scale := 1
 	
+	debug.DEBUG( "Damping: %f" % damping )
+	
 	if( state == WATER ):
 		var p = Water.new()
-		var ret = p.calc_motion( mass, damping, velocity, curr_forces, is_on_floor(), facing )
+		var ret = p.calc_motion( mass, damping, velocity, curr_forces, is_on_floor(), facing, g.GRAVITY )
 		acceleration = ret.accel
 		anim_name = ret.anim
 		sprite_scale = ret.facing
 	elif( state == STEAM ):
 		var p = Steam.new()
-		var ret = p.calc_motion( mass, damping, velocity, curr_forces, is_on_floor(), facing )
+		var ret = p.calc_motion( mass, damping, velocity, curr_forces, is_on_floor(), facing, g.GRAVITY )
 		acceleration = ret.accel
 		anim_name = ret.anim
 		sprite_scale = ret.facing
 	elif( state == ICE ):
 		var p = Ice.new()
-		var ret = p.calc_motion( mass, 0.1*damping, velocity, curr_forces, is_on_floor(), facing )
+		var ret = p.calc_motion( mass, 0.1*damping, velocity, curr_forces, is_on_floor(), facing, g.GRAVITY )
 		acceleration = ret.accel
 		anim_name = ret.anim
 		sprite_scale = ret.facing

@@ -1,4 +1,4 @@
-extends Area2D
+extends Node2D
 
 
 # Declare member variables here. Examples:
@@ -8,7 +8,6 @@ extends Area2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$AnimationPlayer.play( "action" )
 	pass # Replace with function body.
 
 
@@ -17,9 +16,6 @@ func _ready():
 #	pass
 
 
-func _on_Condenser_body_entered(body):
-	if( body.name == "Player" && body.state == 1 ):
-		body.setState( 0 );
-#		$AnimationPlayer.play( "action" )
-		pass
+func _on_TextureButton_pressed():
+	get_tree().change_scene("res://scenes/World.tscn")
 	pass # Replace with function body.
