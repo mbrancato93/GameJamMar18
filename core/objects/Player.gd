@@ -11,6 +11,7 @@ var state := WATER setget setState
 var transitioning := false
 onready var shot_debounce := OS.get_ticks_msec()
 var facing := 1
+var freeze := false
 
 onready var hit_debounce = OS.get_ticks_msec()
 
@@ -19,6 +20,7 @@ func _ready():
 	debug.verbosity = 2
 	debug.period = 1000
 	damping = 3
+	$AnimationPlayer.connect( "animation_finished", self, "transition_end" )
 	pass # Replace with function body.
 
 func shoot( facing: float ):
@@ -42,7 +44,7 @@ func setState( _val ):
 	
 	transitioning = true
 	var state_transition_anim := "none"
-	$AnimationPlayer.connect( "animation_finished", self, "transition_end" )
+#	$AnimationPlayer.connect( "animation_finished", self, "transition_end" )
 	if( state == WATER && _val == ICE ):
 		state_transition_anim = "WATER2ICE"
 	elif( state == WATER && _val == STEAM ):
@@ -64,13 +66,13 @@ func setState( _val ):
 		$AnimationPlayer.play( state_transition_anim )
 	else:
 		transitioning = false
-		$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
+#		$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
 	state = _val
 
 func transition_end( _val = null ):
 	transitioning = false
-	$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
-	
+#	$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
+#
 func hit( source ):
 	if( ( OS.get_ticks_msec() - hit_debounce ) < 1000 ):
 		return
@@ -149,7 +151,7 @@ func _physics_process(delta):
 		var collision = get_slide_collision(i)
 		if( collision.collider.name == "Enemy" ):
 			if( collision.collider.facing == facing ):
-				hit( "Player" )
+#				hit( "Player" )
 				break
 			pass
 	
@@ -160,6 +162,9 @@ func _physics_process(delta):
 	
 #	debug.DEBUG( "%f %f" % [ velocity[0], velocity[1] ] )
 #	debug.DEBUG( "Anim: %s" % anim_name )
+	
+	if( freeze ):
+		velocity = Vector2(0,0)
 
 	velocity = move_and_slide( velocity, UP )
 	

@@ -9,7 +9,7 @@ const speed : int = 30
 func setState( _val ):
 	transitioning = true
 	var state_transition_anim := "none"
-	$AnimationPlayer.connect( "animation_finished", self, "transition_end" )
+	
 	if( state == FIRE && _val == ASH ):
 		state_transition_anim = "FIRE2ASH"
 	elif( state == ASH && _val == FIRE ):
@@ -25,16 +25,17 @@ func setState( _val ):
 		$AnimationPlayer.play( state_transition_anim )
 	else:
 		transitioning = false
-		$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
+#		$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
 	state = _val
 
 func transition_end( _val = null ):
 	transitioning = false
-	$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
+#	$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	debug.period = 1000
+	$AnimationPlayer.connect( "animation_finished", self, "transition_end" )
 	pass # Replace with function body.
 
 func _physics_process(delta):
@@ -47,12 +48,12 @@ func _physics_process(delta):
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 #		debug.DEBUG("Collided with: %s" % collision.collider.name)
-		if( collision.collider.name == "TileMap2" ):
+		if( collision.collider.name == "EnemyStopTiles" ):
 			debug.DEBUG( "Hit bounding wall" )
 			facing *= -1
-		if( collision.collider.name == "Player" ):
-			get_parent().get_node( collision.collider.name ).hit( "Enemy" )
-			facing *= -1
+#		if( collision.collider.name == "Player" ):
+#			get_parent().get_node( collision.collider.name ).hit( "Enemy" )
+#			facing *= -1
 			
 	if( state == FIRE ):
 		$AnimationPlayer.play( "enemy_idle" )
@@ -69,3 +70,11 @@ func hit( _val ):
 		queue_free()
 		return
 	setState( ASH )
+
+
+func _on_Area2D_body_entered(body):
+	if( body.name == "Player" ):
+		body.hit( "Enemy" )
+		facing *= -1
+		pass
+	pass # Replace with function body.
