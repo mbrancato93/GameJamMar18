@@ -32,6 +32,11 @@ func setState( _val ):
 	if( state == DEAD ):
 		$CollisionShape2D.disabled = true
 		$Area2D.get_node("CollisionShape2D").disabled = true
+		self.set_collision_mask_bit( 1, false )
+		self.set_collision_layer_bit( 3, false )
+		$Area2D.set_collision_mask_bit( 1, false )
+		$Area2D.set_collision_layer_bit( 1, false )
+		debug.DEBUG( "Dying Enemy stop collide" )
 
 func transition_end( _val = null ):
 	transitioning = false

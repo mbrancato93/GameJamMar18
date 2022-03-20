@@ -8,7 +8,7 @@ func _ready():
 	pass # Replace with function body.
 
 
-func calc_motion( mass: float, damping: float, velocity: Vector2, forces: Vector2, on_floor: bool, facing: float ):
+func calc_motion( mass: float, damping: float, velocity: Vector2, forces: Vector2, on_floor: bool, facing: float, grav: float ):
 	var anim_name = "none"
 	
 	if( !on_floor ):
@@ -19,7 +19,7 @@ func calc_motion( mass: float, damping: float, velocity: Vector2, forces: Vector
 	var acceleration := forces / mass
 #	if( is_on_floor() ):
 	acceleration[0] -= damping * velocity[0]
-	acceleration[1] += ( 0.5 * g.GRAVITY / mass - sign( velocity[1] ) * damping )
+	acceleration[1] += ( 0.5 * grav / mass - sign( velocity[1] ) * damping )
 	
 	if( forces[1] < 0 || velocity[1] < 0  ):
 #		anim_name = "steam_jump"

@@ -8,7 +8,7 @@ var controls = load( "res://objects/controls.gd" ).new()
 var mass := 1 setget setMass
 var curr_forces := Vector2( 0, 0 ) setget setVec
 var velocity := Vector2( 0, 0 ) setget setVel
-var damping := 0 setget setDamping
+var damping : float = 0 setget setDamping
 
 var UP := Vector2( 0, -1 )
 
@@ -42,3 +42,6 @@ func _process(delta):
 
 func _physics_process(delta):
 	assert( is_instance_valid( debug ) )
+	
+func _input( event ):
+	pass

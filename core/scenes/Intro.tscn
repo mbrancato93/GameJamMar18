@@ -11,12 +11,13 @@ script = ExtResource( 1 )
 
 [node name="RichTextLabel" type="Label" parent="."]
 margin_left = 176.0
-margin_top = 200.0
+margin_top = 224.0
 margin_right = 856.0
 margin_bottom = 568.0
 autowrap = true
 
 [node name="TextureButton" type="TextureButton" parent="."]
+visible = false
 margin_left = 824.0
 margin_top = 504.0
 margin_right = 888.0

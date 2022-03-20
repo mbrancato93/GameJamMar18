@@ -2,7 +2,7 @@
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://background/Cinematic_Background.png" type="Texture" id=2]
-[ext_resource path="res://scenes/Outro.gd" type="Script" id=3]
+[ext_resource path="res://objects/Outro.gd" type="Script" id=3]
 [ext_resource path="res://background/GameOver_Text.png" type="Texture" id=4]
 
 [node name="Outro" type="Node2D"]
