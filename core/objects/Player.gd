@@ -145,8 +145,7 @@ func _physics_process(delta):
 	var anim_name := "none"
 	var sprite_scale := 1
 	
-	debug.DEBUG( "Gravity: %f, Damping: %f" % [ g.GRAVITY, damping ] )
-#	debug.DEBUG( "Damping: %f" % damping )
+	debug.DEBUG("GRAVITY: %f, Damping: %f" %[g.GRAVITY, damping] )
 	
 	if( state == WATER ):
 		var p = Water.new()

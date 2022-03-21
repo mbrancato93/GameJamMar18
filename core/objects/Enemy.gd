@@ -57,6 +57,7 @@ func _physics_process(delta):
 	# add gravity
 	var velocity := Vector2( 0, 0 )
 #	velocity[1] += g.GRAVITY / mass
+
 	
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
