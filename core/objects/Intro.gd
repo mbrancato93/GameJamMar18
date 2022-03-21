@@ -11,7 +11,8 @@ var postfix := ""
 
 var text_list := [ "All life is simply a cycle of matter.", 
 					"For this water sprite simply seeks to complete it's cycle. ",
-					"From the afterlife to reincarnation... " ]
+					"From the afterlife to reincarnation... ", 
+					"Controls: WASD to move, M to mute music" ]
 
 var word_delay := 30
 onready var last_display = OS.get_ticks_msec()
