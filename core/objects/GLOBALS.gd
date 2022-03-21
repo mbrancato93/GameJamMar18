@@ -9,6 +9,9 @@ var shoot := "shoot" setget private
 var transition := "cycle_state" setget private
 var toggle_music := "toggle_music" setget private
 
+var grav_mod := 0
+var damp_mod := 0
+
 var upVec := Vector2( 0, -1 )
 
 func private( _val = null ):

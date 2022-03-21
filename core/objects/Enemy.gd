@@ -58,12 +58,8 @@ func _physics_process(delta):
 	var velocity := Vector2( 0, 0 )
 #	velocity[1] += g.GRAVITY / mass
 
-	
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		if( collision.collider.name == "EnemyStopTiles" ):
-			debug.DEBUG( "Hit bounding wall" )
-			facing *= -1
+	if( is_on_wall() ):
+		facing *= -1
 			
 	if( state == FIRE ):
 		$AnimationPlayer.play( "enemy_idle" )
@@ -74,11 +70,14 @@ func _physics_process(delta):
 	velocity[0] += facing * speed
 	
 	velocity = move_and_slide( velocity, g.upVec )
+#	assert( velocity[0] != 0 );
 	
 func dead_transition( _val = null ):
 	queue_free()
 	
 func hit( _val ):
+	if( !$AudioStreamPlayer.playing ):
+		$AudioStreamPlayer.play()
 	if( state == ASH ):
 #		queue_free()
 		$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )

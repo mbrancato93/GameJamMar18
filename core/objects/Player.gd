@@ -92,15 +92,15 @@ func hit( source ):
 
 func _input( event ):
 	if( event.is_action_pressed( "grav_up" ) ):
-		g.GRAVITY += 10
+		g.GRAVITY += g.grav_mod
 	if( event.is_action_pressed( "grav_down" ) ):
-		if( g.GRAVITY >= 20 ):
-			 g.GRAVITY -= 10
+		if( g.GRAVITY >= 2*g.grav_mod ):
+			 g.GRAVITY -= g.grav_mod
 	if( event.is_action_pressed( "damp_up" ) ):
-		damping += 0.1
+		damping += g.damp_mod
 	if( event.is_action_pressed( "damp_down" ) ):
-		if( damping >= 0.1 ):
-			damping -= 0.1
+		if( damping >= g.damp_mod ):
+			damping -= g.damp_mod
 		
 
 

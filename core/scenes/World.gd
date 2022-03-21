@@ -23,7 +23,5 @@ func _input( event ):
 		$AudioStreamPlayer.playing = !$AudioStreamPlayer.playing 
 		Passers.music_playing = $AudioStreamPlayer.playing
 
-
 func reset():
-
 	pass

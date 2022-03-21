@@ -13,6 +13,8 @@ func _ready():
 #	pass
 
 func portal_done( _val = null ):
+	if( repeats == 2 ):
+		$AudioStreamPlayer.play()
 	if( repeats ):
 		$AnimationPlayer.play( "trigger" )
 		repeats -= 1
