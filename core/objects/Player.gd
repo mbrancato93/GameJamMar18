@@ -12,6 +12,7 @@ var transitioning := false
 onready var shot_debounce := OS.get_ticks_msec()
 var facing := 1
 var freeze := false
+var prev_anim := "none"
 
 onready var hit_debounce = OS.get_ticks_msec()
 
@@ -19,7 +20,7 @@ onready var hit_debounce = OS.get_ticks_msec()
 func _ready():
 	debug.verbosity = 1
 	debug.period = 1000
-	damping = 3
+	damping = 3.2
 	$AnimationPlayer.connect( "animation_finished", self, "transition_end" )
 	pass # Replace with function body.
 
@@ -35,7 +36,10 @@ func shoot( facing: float ):
 		b.transform = $MuzzleLeft.global_transform
 	else:
 		assert( 1==0 )
+	b.start_x = b.position
 	shot_debounce = OS.get_ticks_msec()
+	if( !$Shoot.playing ):
+		$Shoot.play()
 	
 func setState( _val ):
 	if( transitioning ):
@@ -80,7 +84,8 @@ func hit( source ):
 	hit_debounce = OS.get_ticks_msec()
 	if( state == STEAM ):
 		setState( WATER )
-		get_parent().reset()
+#		get_parent().reset()
+		get_tree().reload_current_scene()
 		return
 	if( state != ICE ):
 		setState( STEAM )
@@ -120,6 +125,7 @@ func _physics_process(delta):
 	elif( transitioning ):
 #		curr_forces[1] = 0
 		return
+#		pass
 	 
 	# check if shooting
 	if( controls.shoot_request() && state == WATER ):
@@ -141,10 +147,9 @@ func _physics_process(delta):
 	
 	debug.DEBUG("GRAVITY: %f, Damping: %f" %[g.GRAVITY, damping] )
 	
-	
 	if( state == WATER ):
 		var p = Water.new()
-		var ret = p.calc_motion( mass, damping, velocity, curr_forces, is_on_floor(), facing, g.GRAVITY )
+		var ret = p.calc_motion( mass, damping, velocity, curr_forces, is_on_floor(), facing, g.GRAVITY, prev_anim )
 		acceleration = ret.accel
 		anim_name = ret.anim
 		sprite_scale = ret.facing
@@ -162,19 +167,14 @@ func _physics_process(delta):
 		sprite_scale = ret.facing
 	else:
 		assert( 1== 0 )
-		
-#	for i in get_slide_count():
-#		var collision = get_slide_collision(i)
-#		if( collision.collider.name == "Enemy" ):
-#			if( collision.collider.facing == facing ):
-##				hit( "Player" )
-#				break
-#			pass
 	
 	velocity += acceleration * delta
 	$Sprite.scale.x = sprite_scale
 	facing = sprite_scale
-	$AnimationPlayer.play( anim_name )
+	
+	if( anim_name != "none" ):
+		$AnimationPlayer.play( anim_name )
+	prev_anim = anim_name
 	
 #	debug.DEBUG( "%f %f" % [ velocity[0], velocity[1] ] )
 #	debug.DEBUG( "Anim: %s" % anim_name )
@@ -186,3 +186,16 @@ func _physics_process(delta):
 	
 	if( self.position[1] > 1000 ):
 		get_parent().reset()
+
+
+func _on_AnimationPlayer_animation_started(anim_name):
+	if( anim_name == "water_jump" ):
+		if( !$Jump.playing ):
+			$Jump.play()
+	if( anim_name == "WATER2ICE" ):
+		if( !$Transform2Ice.playing ):
+			$Transform2Ice.play()
+	if( anim_name == "STEAM2WATER" ):
+		if( !$Transform2Water.playing ):
+			$Transform2Water.play()
+	pass # Replace with function body.

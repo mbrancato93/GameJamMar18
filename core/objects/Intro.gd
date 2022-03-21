@@ -1,6 +1,6 @@
 extends Node2D
 
-var button_presses := -1
+var button_presses := 0
 var letter_ind := 0
 var curr_text := ""
 var font_path := "res://fonts/BERNHC.TTF"
@@ -8,19 +8,25 @@ var font_path := "res://fonts/BERNHC.TTF"
 var prefix := ""
 var postfix := ""
 
+
 var text_list := [ "All life is simply a cycle of matter.", 
 					"For this water sprite simply seeks to complete it's cycle. ",
 					"From the afterlife to reincarnation... " ]
 
-var word_delay := 50
+var word_delay := 30
 onready var last_display = OS.get_ticks_msec()
 
 onready var dynamic_font = DynamicFont.new()
+
+var debug = load( "res://objects/debug.gd" ).new()
 
 #onready var passers = get_node( "/root/Passers" )
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	debug.period = 500
+	debug.verbosity = 2
+	
 	dynamic_font.font_data = load( font_path )
 	dynamic_font.size = 20
 	$RichTextLabel.set( "custom_fonts/font", dynamic_font )
@@ -49,8 +55,8 @@ func _input( event ):
 	if( event.is_action_pressed( "toggle_music" ) ):
 		$AudioStreamPlayer.playing = !$AudioStreamPlayer.playing
 		Passers.music_playing = $AudioStreamPlayer.playing
-	if( event.is_action_pressed( "shoot" ) ):
-		print( "Button pressed" )
+	elif( event is InputEventKey && event.pressed ):
+		debug.DEBUG( "Request New Text" )
 	
 		# check if button press should just finish text
 	#	var hld = text_list[button_presses].split( " " )
@@ -71,23 +77,4 @@ func _input( event ):
 		pass # Replace with function body.
 
 
-func _on_TextureButton_pressed():
-	print( "Button pressed" )
-	
-	# check if button press should just finish text
-#	var hld = text_list[button_presses].split( " " )
-	var substr = text_list[button_presses]
-	if( letter_ind < substr.length() && button_presses >= 0 ):
-		curr_text = substr
-		$RichTextLabel.text = prefix + curr_text + postfix
-		letter_ind = substr.length()
-		return
-		
-	button_presses += 1
-	letter_ind = 0
-	$RichTextLabel.text = ""
-	curr_text = ""
-	
-	if( button_presses >= text_list.size() ):
-		get_tree().change_scene("res://scenes/World.tscn")
-	pass # Replace with function body.
+
