@@ -17,7 +17,7 @@ onready var hit_debounce = OS.get_ticks_msec()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	debug.verbosity = 2
+	debug.verbosity = 1
 	debug.period = 1000
 	damping = 3
 	$AnimationPlayer.connect( "animation_finished", self, "transition_end" )
@@ -139,7 +139,8 @@ func _physics_process(delta):
 	var anim_name := "none"
 	var sprite_scale := 1
 	
-	debug.DEBUG( "Damping: %f" % damping )
+	debug.DEBUG("GRAVITY: %f, Damping: %f" %[g.GRAVITY, damping] )
+	
 	
 	if( state == WATER ):
 		var p = Water.new()

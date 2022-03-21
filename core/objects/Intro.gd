@@ -8,9 +8,9 @@ var font_path := "res://fonts/BERNHC.TTF"
 var prefix := ""
 var postfix := ""
 
-var text_list := [ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac urna euismod turpis convallis placerat. Integer non sapien eget lacus tempor accumsan quis sit amet velit. Etiam quis maximus enim. Cras posuere consectetur ipsum, id auctor ante egestas eu. Sed sit amet fringilla massa. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ornare elit libero. Phasellus sed pulvinar dui. Proin ullamcorper aliquet auctor. Phasellus eu dui eu metus semper congue. Quisque mollis quis neque sit amet porta. Praesent libero nisi, pretium porttitor sem in, pretium efficitur sem.", 
-					"Praesent a quam risus. Aliquam erat volutpat. Phasellus sagittis magna nec molestie ullamcorper. Suspendisse varius erat non mauris pellentesque, sit amet mattis sapien volutpat. Ut tincidunt sit amet urna sit amet tempus. Curabitur arcu ex, tempus vitae lectus at, hendrerit suscipit nisi. Quisque nisl lacus, venenatis eu odio in, sagittis porta nulla. Duis ut lectus eros. Suspendisse aliquam sed mauris dictum bibendum. Suspendisse feugiat iaculis lacus, vel fringilla nulla cursus vitae. Fusce fermentum varius turpis, eget laoreet orci aliquam id. Fusce non dolor ac mi convallis pulvinar. ",
-					"Curabitur sit amet arcu vel ligula efficitur tempus interdum sed sem. Donec quis consectetur magna. In mollis velit augue, vitae placerat urna facilisis sit amet. Curabitur sit amet nulla efficitur, sollicitudin nisl vel, tincidunt ligula. Proin mi sem, cursus vitae maximus ac, vehicula in leo. Duis porta molestie leo ut elementum. Nulla facilisi. In pellentesque magna vel lectus faucibus, vitae iaculis nulla ullamcorper. Aenean a tellus faucibus, semper dolor id, laoreet ex. Fusce consectetur non lectus id laoreet. Maecenas pellentesque turpis luctus dui consectetur sodales semper non mauris. Nunc sollicitudin neque justo, maximus ullamcorper mauris tempor at. " ]
+var text_list := [ "All life is simply a cycle of matter.", 
+					"For this water sprite simply seeks to complete it's cycle. ",
+					"From the afterlife to reincarnation... " ]
 
 var word_delay := 50
 onready var last_display = OS.get_ticks_msec()
