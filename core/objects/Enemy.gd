@@ -20,8 +20,11 @@ func setState( _val ):
 		state_transition_anim = "none"
 	elif( state == FIRE && _val == FIRE ):
 		state_transition_anim = "none"
+	elif( state == _val ):
+		pass
 	else:
-		assert( 1 == 0 )
+#		assert( 1 == 0 )
+		pass
 		
 	if( state_transition_anim != "none" ):
 		$AnimationPlayer.play( state_transition_anim )
@@ -30,8 +33,8 @@ func setState( _val ):
 #		$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )
 	state = _val
 	if( state == DEAD ):
-		$CollisionShape2D.disabled = true
-		$Area2D.get_node("CollisionShape2D").disabled = true
+#		$CollisionShape2D.disabled = true
+#		$Area2D.get_node("CollisionShape2D").disabled = true
 		self.set_collision_mask_bit( 1, false )
 		self.set_collision_layer_bit( 3, false )
 		$Area2D.set_collision_mask_bit( 1, false )
@@ -53,17 +56,10 @@ func _physics_process(delta):
 		return
 	# add gravity
 	var velocity := Vector2( 0, 0 )
-	velocity[1] += g.GRAVITY / mass
-	
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-#		debug.DEBUG("Collided with: %s" % collision.collider.name)
-		if( collision.collider.name == "EnemyStopTiles" ):
-			debug.DEBUG( "Hit bounding wall" )
-			facing *= -1
-#		if( collision.collider.name == "Player" ):
-#			get_parent().get_node( collision.collider.name ).hit( "Enemy" )
-#			facing *= -1
+#	velocity[1] += g.GRAVITY / mass
+
+	if( is_on_wall() ):
+		facing *= -1
 			
 	if( state == FIRE ):
 		$AnimationPlayer.play( "enemy_idle" )
@@ -74,11 +70,14 @@ func _physics_process(delta):
 	velocity[0] += facing * speed
 	
 	velocity = move_and_slide( velocity, g.upVec )
+#	assert( velocity[0] != 0 );
 	
 func dead_transition( _val = null ):
 	queue_free()
 	
 func hit( _val ):
+	if( !$AudioStreamPlayer.playing ):
+		$AudioStreamPlayer.play()
 	if( state == ASH ):
 #		queue_free()
 		$AnimationPlayer.disconnect( "animation_finished", self, "transition_end" )

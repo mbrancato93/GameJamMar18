@@ -58,6 +58,10 @@ config/icon="res://icon.png"
 
 Passers="*res://passers.gd"
 
+[display]
+
+window/size/resizable=false
+
 [input]
 
 left={

@@ -13,4 +13,4 @@ func calc_motion( mass: float, damping: float, velocity: Vector2, forces: Vector
 	if( velocity[0] < 0 ):
 		facing = -1
 		
-	return { "accel": Vector2( -facing * damping * abs( velocity[0] ), 0 ), "anim": "ice_idle", "facing": facing }
+	return { "accel": Vector2( -facing * damping * abs( velocity[0] ), grav / mass - sign( velocity[1] ) * damping ), "anim": "ice_idle", "facing": facing }

@@ -8,7 +8,7 @@ var hor_track := 256
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	debug.verbosity = 0
+	debug.verbosity = 1
 	debug.period = 1000
 	self.zoom.x = 0.5
 	self.zoom.y = 0.5
@@ -19,6 +19,11 @@ func _ready():
 #func _process(delta):
 #	pass
 func _physics_process(delta):
+	var vps = get_viewport().size
+	debug.DEBUG( "VPS: %f %f" % [ vps[0], vps[1] ] )
+	
+	height_track = vps[1] * self.zoom.y + 100
+	
 	var player_pos := Vector2( 0, 0 )
 	var mp = get_parent().get_node( "Player" )
 	if( is_instance_valid( mp ) ):
@@ -32,5 +37,7 @@ func _physics_process(delta):
 	
 	if( player_pos[1] < height_track ):
 		self.position[1] = player_pos[1]
+	else:
+		self.position[1] = height_track
 	pass
 	
